@@ -13,9 +13,9 @@ import json
 
 import threading
 
-from models import *
+from bot.models import *
 
-from strategies import TechnicalStrategy, BreakoutStrategy
+from bot.strategies import TechnicalStrategy, BreakoutStrategy
 
 
 logger = logging.getLogger()

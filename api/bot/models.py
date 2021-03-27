@@ -1,5 +1,6 @@
 import dateutil.parser
 import datetime
+import json
 
 
 BITMEX_MULTIPLIER = 0.00000001
@@ -50,6 +51,18 @@ class Candle:
             self.low = candle_info['low']
             self.close = candle_info['close']
             self.volume = candle_info['volume']
+
+
+class CandleEncoder(json.JSONEncoder):
+    def default(self, object):
+        if isinstance(object, Candle):
+            return object.__dict__
+        else:
+            # call base class implementation which takes care of
+            # raising exceptions for unsupported types
+            return json.JSONEncoder.default(self, object)
+
+
 
 
 def tick_to_decimals(tick_size: float) -> int:

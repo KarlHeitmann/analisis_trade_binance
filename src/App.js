@@ -7,6 +7,7 @@ function App() {
 
   useEffect(() => {
     fetch('/time').then(res => res.json()).then(data => {
+      console.log(data.candles)
       setCurrentTime(data.time);
     });
   }, []);

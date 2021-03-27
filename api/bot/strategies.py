@@ -4,7 +4,7 @@ import time
 
 from threading import Timer
 
-from models import *
+from bot.models import *
 
 import pandas as pd
 
