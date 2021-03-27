@@ -10,15 +10,14 @@ app = Flask(__name__)
 
 binance = BinanceFuturesClient(os.environ['BINANCE_KEY'], os.environ['BINANCE_SECRET'], True, 'cut')
 
-@app.route('/time')
-def get_current_time():
+@app.route('/candles')
+def get_candles():
     contracts = binance.get_contracts()
     symbol = 'BTCUSDT'
     contract = contracts[symbol]
     other_param = {
         'min_volume': 0
     }
-
     print("WAWAWAWWAWAWAWAWA")
     time_frame = '1m'
 
@@ -33,6 +32,8 @@ def get_current_time():
 
     candles = [ candle.close for candle in strategy.candles ]
 
-    # return {'time': time.time()}
-    # return {'time': time.time(), 'candles': strategy.candles}
-    return {'time': time.time(), 'candles': candles}
+    return {'candles': candles}
+
+@app.route('/time')
+def get_current_time():
+    return {'time': time.time()}
