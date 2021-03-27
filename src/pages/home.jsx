@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Plot from 'react-plotly.js';
 
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
@@ -30,6 +31,23 @@ function Home(props) {
     <h1>Home</h1>
     <button onClick={clickCandles}>Candles</button>
     <p>The current time is {currentTime}.</p>
+    <Plot
+      data={[
+        {
+          x: [1, 2, 3],
+          y: [2, 6, 3],
+          type: 'scatter',
+          mode: 'lines+markers',
+          marker: {color: 'red'},
+        },
+        {
+          x: [1, 2, 3],
+          y: [2, 5, 3],
+          type: 'bar',
+        },
+      ]}
+      layout={ {width: 320, height: 240, title: 'A Fancy Plot'} }
+    />
     <table>
       {candles.map(candle => <tr>
         <td>{candle}</td>
