@@ -30,7 +30,22 @@ def get_candles():
 
     print("::::::::::::::::::::::::::::::::::::::::::.")
 
-    candles = [ candle.close for candle in strategy.candles ]
+    headers = ['close', 'open', 'high', 'low']
+
+    # candles = {'close': [], 'open': [], 'high': [], 'low': []}
+
+    # candles = [ {'close': candle.close, 'open': candle.open, 'high': candle.high, 'low': candle.low, 'volume': candle.volume} for candle in strategy.candles ]
+
+    # candles = dict()
+    # for header in headers:
+    #     candles[header] = [  ]
+    candles = {}
+    candles['close'] = [ candle.close for candle in strategy.candles ]
+    candles['open'] = [ candle.open for candle in strategy.candles ]
+    candles['high'] = [ candle.high for candle in strategy.candles ]
+    candles['low'] = [ candle.low for candle in strategy.candles ]
+    candles['volume'] = [ candle.volume for candle in strategy.candles ]
+
 
     return {'candles': candles}
 

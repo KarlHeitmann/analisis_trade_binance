@@ -5,7 +5,7 @@ import PlotCandleSticks from '../plots/plot_candle_sticks';
 
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
-  const [candles, setCandles] = useState([]);
+  const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
 
   useEffect(() => {
     fetch('/time').then(res => res.json()).then(data => {
@@ -19,12 +19,12 @@ function Home(props) {
     //   console.log(data.candles);
     //   setCandles(candles);
     // });
-    const candles_raw = await fetch('/candles');
-    const candles = await candles_raw.json();
-    console.log("CANDLES_RAW", candles_raw);
-    console.log("CANDLES_", candles);
-    setCandles(candles.candles);
-
+    const response = await fetch('/candles');
+    const result = await response.json();
+    const {candles} = result;
+    console.log(candles)
+    setCandles(candles)
+    // setCandles(candles.candles);
   }
 
   console.log(candles);
@@ -35,7 +35,7 @@ function Home(props) {
     <button onClick={clickCandles}>Candles</button>
     <p>The current time is {currentTime}.</p>
     <PlotCandleSticks
-      data={data}
+      data={candles}
       layout={layout}
     />
     <Plot
@@ -53,9 +53,9 @@ function Home(props) {
       // layout={ {title: 'A Fancy Plot'} }
     />
     <table>
-      {candles.map(candle => <tr>
+      {/* {candles.map(candle => <tr>
         <td>{candle}</td>
-      </tr>)}
+      </tr>)} */}
     </table>
   </>;
 }
