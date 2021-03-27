@@ -8,25 +8,25 @@ from bot.strategies import BreakoutStrategy
 
 app = Flask(__name__)
 
+time_frame = '1m'
+symbol = 'BTCUSDT'
+
 binance = BinanceFuturesClient(os.environ['BINANCE_KEY'], os.environ['BINANCE_SECRET'], True, 'cut')
+contracts = binance.get_contracts()
+contract = contracts[symbol]
+other_param = {
+    'min_volume': 0
+}
+strategy = BreakoutStrategy(binance, contract, 'binance', time_frame, 0.1, 0.1, 0.1, other_param)
+strategy.candles = binance.get_historical_candles(contract, time_frame)
+binance.strategies[symbol] = strategy
+binance.strategies[0] = strategy
 
 @app.route('/candles')
 def get_candles():
-    contracts = binance.get_contracts()
-    symbol = 'BTCUSDT'
-    contract = contracts[symbol]
-    other_param = {
-        'min_volume': 0
-    }
     print("WAWAWAWWAWAWAWAWA")
-    time_frame = '1m'
-
-    strategy = BreakoutStrategy(binance, contract, 'binance', time_frame, 0.1, 0.1, 0.1, other_param)
     print("000000000000000000000")
-    binance.strategies[symbol] = strategy
     print("---------------------------------")
-
-    strategy.candles = binance.get_historical_candles(contract, time_frame)
 
     print("::::::::::::::::::::::::::::::::::::::::::.")
 
