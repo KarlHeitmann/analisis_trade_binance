@@ -39,12 +39,14 @@ def get_candles():
     # candles = dict()
     # for header in headers:
     #     candles[header] = [  ]
+    print(strategy.candles[0])
     candles = {}
     candles['close'] = [ candle.close for candle in strategy.candles ]
     candles['open'] = [ candle.open for candle in strategy.candles ]
     candles['high'] = [ candle.high for candle in strategy.candles ]
     candles['low'] = [ candle.low for candle in strategy.candles ]
     candles['volume'] = [ candle.volume for candle in strategy.candles ]
+    candles['timestamp'] = [ candle.timestamp for candle in strategy.candles ]
 
 
     return {'candles': candles}

@@ -49,6 +49,7 @@ function PlotCandleSticks(props) {
   trace_candlestick.high = data.high;
   trace_candlestick.low = data.low;
   trace_candlestick.volume = data.volume;
+  trace_candlestick.x = data.timestamp;
   return <>
     <h1>Plot Candle Sticks</h1>
     <Plot

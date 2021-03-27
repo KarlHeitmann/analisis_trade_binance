@@ -22,7 +22,7 @@ function Home(props) {
     const response = await fetch('/candles');
     const result = await response.json();
     const {candles} = result;
-    console.log(candles)
+    console.log("RAW CANDLES", candles)
     setCandles(candles)
     // setCandles(candles.candles);
   }
