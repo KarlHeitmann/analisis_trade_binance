@@ -8,29 +8,46 @@ from bot.strategies import BreakoutStrategy
 
 app = Flask(__name__)
 
+time_frame = '1m'
+symbol = 'BTCUSDT'
+
 binance = BinanceFuturesClient(os.environ['BINANCE_KEY'], os.environ['BINANCE_SECRET'], True, 'cut')
+contracts = binance.get_contracts()
+contract = contracts[symbol]
+other_param = {
+    'min_volume': 0
+}
+strategy = BreakoutStrategy(binance, contract, 'binance', time_frame, 0.1, 0.1, 0.1, other_param)
+strategy.candles = binance.get_historical_candles(contract, time_frame)
+binance.strategies[symbol] = strategy
+binance.strategies[0] = strategy
 
 @app.route('/candles')
 def get_candles():
-    contracts = binance.get_contracts()
-    symbol = 'BTCUSDT'
-    contract = contracts[symbol]
-    other_param = {
-        'min_volume': 0
-    }
     print("WAWAWAWWAWAWAWAWA")
-    time_frame = '1m'
-
-    strategy = BreakoutStrategy(binance, contract, 'binance', time_frame, 0.1, 0.1, 0.1, other_param)
     print("000000000000000000000")
-    binance.strategies[symbol] = strategy
     print("---------------------------------")
-
-    strategy.candles = binance.get_historical_candles(contract, time_frame)
 
     print("::::::::::::::::::::::::::::::::::::::::::.")
 
-    candles = [ candle.close for candle in strategy.candles ]
+    headers = ['close', 'open', 'high', 'low']
+
+    # candles = {'close': [], 'open': [], 'high': [], 'low': []}
+
+    # candles = [ {'close': candle.close, 'open': candle.open, 'high': candle.high, 'low': candle.low, 'volume': candle.volume} for candle in strategy.candles ]
+
+    # candles = dict()
+    # for header in headers:
+    #     candles[header] = [  ]
+    print(strategy.candles[0])
+    candles = {}
+    candles['close'] = [ candle.close for candle in strategy.candles ]
+    candles['open'] = [ candle.open for candle in strategy.candles ]
+    candles['high'] = [ candle.high for candle in strategy.candles ]
+    candles['low'] = [ candle.low for candle in strategy.candles ]
+    candles['volume'] = [ candle.volume for candle in strategy.candles ]
+    candles['timestamp'] = [ candle.timestamp for candle in strategy.candles ]
+
 
     return {'candles': candles}
 
