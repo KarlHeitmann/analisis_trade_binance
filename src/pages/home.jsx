@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from 'antd'
 import PlotCandleSticks from '../plots/plot_candle_sticks';
 
 function Home(props) {
@@ -36,8 +37,8 @@ function Home(props) {
 
   return <>
     <h1>Home</h1>
-    <button onClick={clickCandles}>Candles</button>
-    <button onClick={clickStart}>START</button>
+    <Button onClick={clickCandles}>Candles</Button>
+    <Button onClick={clickStart}>START</Button>
     <p>The current time is {currentTime}.</p>
     <PlotCandleSticks
       data={candles}
