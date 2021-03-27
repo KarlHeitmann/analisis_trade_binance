@@ -10,20 +10,32 @@ app = Flask(__name__)
 
 time_frame = '1m'
 symbol = 'BTCUSDT'
+binance = None
+contracts = None
+contract = None
+strategy = None
 
-binance = BinanceFuturesClient(os.environ['BINANCE_KEY'], os.environ['BINANCE_SECRET'], True, 'cut')
-contracts = binance.get_contracts()
-contract = contracts[symbol]
 other_param = {
     'min_volume': 0
 }
-strategy = BreakoutStrategy(binance, contract, 'binance', time_frame, 0.1, 0.1, 0.1, other_param)
-strategy.candles = binance.get_historical_candles(contract, time_frame)
-binance.strategies[symbol] = strategy
-binance.strategies[0] = strategy
+
+@app.route('/start')
+def get_start():
+    print("START")
+    global binance, contracts, contract, strategy
+    binance = BinanceFuturesClient(os.environ['BINANCE_KEY'], os.environ['BINANCE_SECRET'], True, 'cut')
+    contracts = binance.get_contracts()
+    contract = contracts[symbol]
+    strategy = BreakoutStrategy(binance, contract, 'binance', time_frame, 0.1, 0.1, 0.1, other_param)
+    strategy.candles = binance.get_historical_candles(contract, time_frame)
+    binance.strategies[symbol] = strategy
+    binance.strategies[0] = strategy
+    print("END")
+    return {'ready': True}
 
 @app.route('/candles')
 def get_candles():
+    global strategy
     print("WAWAWAWWAWAWAWAWA")
     print("000000000000000000000")
     print("---------------------------------")
@@ -31,7 +43,6 @@ def get_candles():
     print("::::::::::::::::::::::::::::::::::::::::::.")
 
     headers = ['close', 'open', 'high', 'low']
-
     # candles = {'close': [], 'open': [], 'high': [], 'low': []}
 
     # candles = [ {'close': candle.close, 'open': candle.open, 'high': candle.high, 'low': candle.low, 'volume': candle.volume} for candle in strategy.candles ]
@@ -39,6 +50,7 @@ def get_candles():
     # candles = dict()
     # for header in headers:
     #     candles[header] = [  ]
+    print("STRATEGY----------------", strategy)
     print(strategy.candles[0])
     candles = {}
     candles['close'] = [ candle.close for candle in strategy.candles ]

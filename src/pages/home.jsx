@@ -11,6 +11,12 @@ function Home(props) {
     });
   }, []);
 
+  const clickStart = async() => {
+    const response = await fetch('/start');
+    const result = await response.json();
+    console.log("RAW CANDLES", result)
+  }
+
   const clickCandles = async() => {
     // function clickCandles() {
     // fetch('/candles').then(res => res.json()).then(data => {
@@ -31,6 +37,7 @@ function Home(props) {
   return <>
     <h1>Home</h1>
     <button onClick={clickCandles}>Candles</button>
+    <button onClick={clickStart}>START</button>
     <p>The current time is {currentTime}.</p>
     <PlotCandleSticks
       data={candles}
