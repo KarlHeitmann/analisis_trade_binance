@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import {data, layout} from './candle_stick_example'
+import PlotCandleSticks from '../plots/plot_candle_sticks';
 
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
@@ -33,6 +34,10 @@ function Home(props) {
     <h1>Home</h1>
     <button onClick={clickCandles}>Candles</button>
     <p>The current time is {currentTime}.</p>
+    <PlotCandleSticks
+      data={data}
+      layout={layout}
+    />
     <Plot
       data={data}
       layout={layout}
