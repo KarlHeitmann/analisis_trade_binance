@@ -1,7 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-var layout_2 = {
+var layout = {
   dragmode: 'zoom',
   margin: {
     r: 10,
@@ -41,7 +41,7 @@ let trace_candlestick = {
 };
 
 function PlotCandleSticks(props) {
-  const {data, layout} = props;
+  const {data} = props;
   console.log('data props', data);
 
   trace_candlestick.close = data.close;

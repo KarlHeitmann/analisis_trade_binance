@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Plot from 'react-plotly.js';
-import {data, layout} from './candle_stick_example'
 import PlotCandleSticks from '../plots/plot_candle_sticks';
 
 function Home(props) {
@@ -36,21 +34,6 @@ function Home(props) {
     <p>The current time is {currentTime}.</p>
     <PlotCandleSticks
       data={candles}
-      layout={layout}
-    />
-    <Plot
-      data={data}
-      layout={layout}
-      // data={[
-      //   {
-      //     y: candles,
-      //     type: 'scatter',
-      //     mode: 'lines+markers',
-      //     marker: {color: 'red'},
-      //   },
-      // ]}
-      // // layout={ {width: 320, height: 240, title: 'A Fancy Plot'} }
-      // layout={ {title: 'A Fancy Plot'} }
     />
     <table>
       {/* {candles.map(candle => <tr>
