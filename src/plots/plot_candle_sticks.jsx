@@ -78,8 +78,8 @@ function PlotCandleSticks(props) {
   // trace_trends.y = ta.trend_ema_fast;
   trace_trends_1.y = Object.keys(ta.trend_ema_fast).map(data => ta.trend_ema_fast[data]);
   trace_trends_2.y = Object.keys(ta.trend_ema_slow).map(data => ta.trend_ema_slow[data]);
-  trace_trends_1.y.slice(current_values[0], current_values[1])
-  trace_trends_2.y.slice(current_values[0], current_values[1])
+  trace_trends_1.y = trace_trends_1.y.slice(current_values[0], current_values[1])
+  trace_trends_2.y = trace_trends_2.y.slice(current_values[0], current_values[1])
   // const trend_ema_fast = ta.trend_ema_fast.slice(current_values[0], current_values[1]);
   // const trend_ema_slow = ta.trend_ema_slow.slice(current_values[0], current_values[1]);
   // console.log("TRACE_TREND YYYYYYY",trace_trends)
