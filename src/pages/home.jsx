@@ -6,6 +6,7 @@ import Contracts from '../components/contracts';
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
+  const [symbols, setSymbols] = useState([])
 
   useEffect(() => {
     fetch('/time').then(res => res.json()).then(data => {
@@ -48,7 +49,10 @@ function Home(props) {
         />
       </Col>
       <Col span={4}>
-        <Contracts />
+        <Contracts
+          setSymbols={setSymbols}
+          symbols={symbols}
+        />
       </Col>
     </Row>
   </>;

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import { Table, Space } from 'antd';
+import React, {useEffect} from 'react';
+import { Table } from 'antd';
 
 function Contracts(props) {
-  const [symbols, setSymbols] = useState([])
+  const {symbols, setSymbols} = props
   const columns = [
     {
       title: 'Symbol',
