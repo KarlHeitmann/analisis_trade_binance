@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'antd'
+import { Row, Col, Button } from 'antd'
 import PlotCandleSticks from '../plots/plot_candle_sticks';
 import Contracts from '../components/contracts';
 
@@ -41,10 +41,16 @@ function Home(props) {
     <Button onClick={clickCandles}>Candles</Button>
     <Button onClick={clickStart}>START</Button>
     <p>The current time is {currentTime}.</p>
-    <PlotCandleSticks
-      data={candles}
-    />
-    <Contracts />
+    <Row>
+      <Col span={18}>
+        <PlotCandleSticks
+          data={candles}
+        />
+      </Col>
+      <Col span={4}>
+        <Contracts />
+      </Col>
+    </Row>
   </>;
 }
 
