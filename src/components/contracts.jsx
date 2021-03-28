@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Table, Space } from 'antd';
 
 const columns = [
@@ -26,6 +26,12 @@ const data = [
 ];
 
 function Contracts(props) {
+  // useEffect(() => {
+  //   fetch('/contracts').then(res => res.json()).then(data => {
+  //     console.log(data);
+  //   });
+  // }, []);
+
   return <Table columns={columns} dataSource={data} />;
 }
 

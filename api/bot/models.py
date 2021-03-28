@@ -51,6 +51,14 @@ class Candle:
             self.low = candle_info['low']
             self.close = candle_info['close']
             self.volume = candle_info['volume']
+        self.data_dict = {
+            'open': self.open,
+            'close': self.close,
+            'high': self.high,
+            'low': self.low,
+            'timestamp': self.timestamp,
+            'volume': self.volume,
+        }
 
 
 class CandleEncoder(json.JSONEncoder):
