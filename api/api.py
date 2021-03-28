@@ -14,6 +14,14 @@ contracts = binance.get_contracts()
 time_frame = '1m'
 symbol = 'BTCUSDT'
 
+@app.route('/symbols')
+def get_symbols():
+    global binance, contracts
+    symbols = []
+    for symbol, contract in contracts.items():
+        symbols.append(symbol)
+    return {"symbols": symbols}
+
 @app.route('/candles')
 def get_candles():
     global binance, contracts

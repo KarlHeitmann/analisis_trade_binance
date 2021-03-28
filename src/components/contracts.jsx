@@ -26,13 +26,24 @@ const data = [
 ];
 
 function Contracts(props) {
-  // useEffect(() => {
-  //   fetch('/contracts').then(res => res.json()).then(data => {
-  //     console.log(data);
-  //   });
-  // }, []);
+  const [symbols, setSymbols] = useState([])
+  useEffect(() => {
+    fetch('/symbols').then(res => res.json()).then(data => {
+      const {symbols} = data;
+      // symbols = symbols.map((symbol, i) => {"key": i, "name": symbol})
+      const ss = symbols.map((currElement, index) => {
+        console.log("The current iteration is: " + index);
+        console.log("The current element is: " + currElement);
+        console.log("\n");
+        return {key: index, name: currElement}; //equivalent to list[index]
+      });
+      console.log("symbols", symbols);
+      console.log("ss", ss);
+      setSymbols(ss)
+    });
+  }, []);
 
-  return <Table columns={columns} dataSource={data} />;
+  return <Table columns={columns} dataSource={symbols} />;
 }
 
 export default Contracts;

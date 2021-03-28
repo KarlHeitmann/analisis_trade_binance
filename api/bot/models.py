@@ -114,6 +114,15 @@ class Contract:
             if self.inverse:
                 self.multiplier *= -1
 
+        self.data_dict = {
+            'symbol': self.symbol,
+            'base_asset': self.base_asset,
+            'quote_asset': self.quote_asset,
+            'price_decimals': self.price_decimals,
+            'quantity_decimals': self.quantity_decimals,
+            'tick_size': self.tick_size,
+            'lot_size': self.lot_size,
+        }
         self.exchange = exchange
 
 
