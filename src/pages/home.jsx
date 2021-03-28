@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'antd'
 import PlotCandleSticks from '../plots/plot_candle_sticks';
+import Contracts from '../components/contracts';
 
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
@@ -43,11 +44,7 @@ function Home(props) {
     <PlotCandleSticks
       data={candles}
     />
-    <table>
-      {/* {candles.map(candle => <tr>
-        <td>{candle}</td>
-      </tr>)} */}
-    </table>
+    <Contracts />
   </>;
 }
 
