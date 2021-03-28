@@ -25,25 +25,16 @@ def get_symbols():
 @app.route('/candles/<symbol>/<tf>')
 def get_candles(symbol, tf):
     global binance, contracts
-    headers = ['close', 'open', 'high', 'low']
-    print("STRATEGY----------------", binance)
-    candles_raw = binance.get_historical_candles(contracts[symbol], tf)
-    # print(candles)
-    candles = {}
-    # candles['close'] = [ candle.close for candle in candles_raw ]
-    # candles['open'] = [ candle.open for candle in candles_raw ]
-    # candles['high'] = [ candle.high for candle in candles_raw ]
-    # candles['low'] = [ candle.low for candle in candles_raw ]
-    # candles['volume'] = [ candle.volume for candle in candles_raw ]
-    # candles['timestamp'] = [ candle.timestamp for candle in candles_raw ]
 
+    candles_raw = binance.get_historical_candles(contracts[symbol], tf)
+
+    candles = {}
     candles['close'] = [ candle.data_dict['close'] for candle in candles_raw ]
     candles['open'] = [ candle.data_dict['open'] for candle in candles_raw ]
     candles['high'] = [ candle.data_dict['high'] for candle in candles_raw ]
     candles['low'] = [ candle.data_dict['low'] for candle in candles_raw ]
     candles['volume'] = [ candle.data_dict['volume'] for candle in candles_raw ]
     candles['timestamp'] = [ candle.data_dict['timestamp'] for candle in candles_raw ]
-
 
     return {'candles': candles}
 
