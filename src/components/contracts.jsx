@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import { Table } from 'antd';
 
 function Contracts(props) {
-  const {symbols, setSymbols} = props
+  const {symbols, setSymbols, getCandlesSymbol} = props;
   const columns = [
     {
       title: 'Symbol',
       dataIndex: 'symbol',
       key: 'symbol',
-      render: text => <a>{text}</a>,
+      render: text => <a onClick={() => {getCandlesSymbol(text)}}>{text}</a>,
     },
   ];
 

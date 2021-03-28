@@ -20,6 +20,10 @@ function Home(props) {
     console.log("RAW CANDLES", result)
   }
 
+  const getCandlesSymbol = async(symbol) => {
+    console.log(symbol);
+  }
+
   const clickCandles = async() => {
     // function clickCandles() {
     // fetch('/candles').then(res => res.json()).then(data => {
@@ -50,6 +54,7 @@ function Home(props) {
       </Col>
       <Col span={4}>
         <Contracts
+          getCandlesSymbol={getCandlesSymbol}
           setSymbols={setSymbols}
           symbols={symbols}
         />
