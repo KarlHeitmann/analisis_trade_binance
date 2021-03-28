@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Button } from 'antd'
 import PlotCandleSticks from '../plots/plot_candle_sticks';
 import Contracts from '../components/contracts';
+import TimeFrames from '../components/time_frames';
 
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
@@ -31,9 +32,18 @@ function Home(props) {
   }
 
   return <>
-    <h1>Home</h1>
-    <Button onClick={clickStart}>START</Button>
-    <p>The current time is {currentTime}.</p>
+    <Row>
+      <Col span={7}>
+        <h1>Home</h1>
+        <p>The current time is {currentTime}.</p>
+      </Col>
+      <Col span={7}>
+        <Button onClick={clickStart}>START</Button>
+      </Col>
+      <Col span={7}>
+        <TimeFrames />
+      </Col>
+    </Row>
     <Row>
       <Col span={18}>
         <PlotCandleSticks
