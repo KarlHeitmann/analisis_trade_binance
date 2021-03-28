@@ -7,7 +7,7 @@ function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
   const [symbols, setSymbols] = useState([])
-  const [ta, setTa] = useState({})
+  const [ta, setTa] = useState({trend_ema_fast: [], trend_ema_slow: []})
 
   useEffect(() => {
     fetch('/time').then(res => res.json()).then(data => {
