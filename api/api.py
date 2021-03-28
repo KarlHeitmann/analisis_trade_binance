@@ -22,12 +22,12 @@ def get_symbols():
         symbols.append(symbol)
     return {"symbols": symbols}
 
-@app.route('/candles')
-def get_candles():
+@app.route('/candles/<symbol>/<tf>')
+def get_candles(symbol, tf):
     global binance, contracts
     headers = ['close', 'open', 'high', 'low']
     print("STRATEGY----------------", binance)
-    candles_raw = binance.get_historical_candles(contracts['BTCUSDT'], '1h')
+    candles_raw = binance.get_historical_candles(contracts[symbol], tf)
     # print(candles)
     candles = {}
     # candles['close'] = [ candle.close for candle in candles_raw ]

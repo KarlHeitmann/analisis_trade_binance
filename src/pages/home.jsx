@@ -21,29 +21,16 @@ function Home(props) {
   }
 
   const getCandlesSymbol = async(symbol) => {
-    console.log(symbol);
-  }
-
-  const clickCandles = async() => {
-    // function clickCandles() {
-    // fetch('/candles').then(res => res.json()).then(data => {
-    //   console.log(data.candles);
-    //   setCandles(candles);
-    // });
-    const response = await fetch('/candles');
+    const tf = '1m'
+    const response = await fetch(`/candles/${symbol}/${tf}`);
     const result = await response.json();
     const {candles} = result;
     console.log("RAW CANDLES", candles)
     setCandles(candles)
-    // setCandles(candles.candles);
   }
-
-  console.log(candles);
-
 
   return <>
     <h1>Home</h1>
-    <Button onClick={clickCandles}>Candles</Button>
     <Button onClick={clickStart}>START</Button>
     <p>The current time is {currentTime}.</p>
     <Row>
