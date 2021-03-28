@@ -7,6 +7,7 @@ function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
   const [symbols, setSymbols] = useState([])
+  const [ta, setTa] = useState({})
 
   useEffect(() => {
     fetch('/time').then(res => res.json()).then(data => {
@@ -24,8 +25,9 @@ function Home(props) {
     const response = await fetch(`/candles/${symbol}/${tf}`);
     const result = await response.json();
     const {candles} = result;
-    console.log("RAW CANDLES", result)
-    setCandles(candles)
+    console.log("RAW CANDLES", result);
+    setCandles(candles);
+    setTa(result.df);
   }
 
   return <>
@@ -36,6 +38,7 @@ function Home(props) {
       <Col span={18}>
         <PlotCandleSticks
           data={candles}
+          ta={ta}
         />
       </Col>
       <Col span={4}>
