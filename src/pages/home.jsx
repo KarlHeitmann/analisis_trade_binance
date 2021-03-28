@@ -17,7 +17,6 @@ function Home(props) {
   const clickStart = async() => {
     const response = await fetch('/start');
     const result = await response.json();
-    console.log("RAW CANDLES", result)
   }
 
   const getCandlesSymbol = async(symbol) => {
@@ -25,7 +24,7 @@ function Home(props) {
     const response = await fetch(`/candles/${symbol}/${tf}`);
     const result = await response.json();
     const {candles} = result;
-    console.log("RAW CANDLES", candles)
+    console.log("RAW CANDLES", result)
     setCandles(candles)
   }
 

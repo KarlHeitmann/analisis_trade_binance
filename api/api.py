@@ -2,6 +2,9 @@ import time
 import os
 from flask import Flask
 
+import pandas as pd
+import ta
+
 # from bot.connectors.binance_futures import BinanceFuturesClient
 # from bot.strategies import BreakoutStrategy
 
@@ -36,7 +39,13 @@ def get_candles(symbol, tf):
     candles['volume'] = [ candle.data_dict['volume'] for candle in candles_raw ]
     candles['timestamp'] = [ candle.data_dict['timestamp'] for candle in candles_raw ]
 
-    return {'candles': candles}
+    df = pd.DataFrame(data=candles)
+    df = ta.add_all_ta_features(df, "open", "high", "low", "close", "volume", fillna=True)
+
+
+    return {'candles': candles, 'df': df.to_dict()}
+    # return {'candles': candles, 'df': df.to_json()}
+    # return {'candles': candles}
 
 @app.route('/time')
 def get_current_time():
