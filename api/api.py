@@ -1,6 +1,7 @@
 import time
 import os
 from flask import Flask
+from flask import request
 
 import pandas as pd
 import ta
@@ -16,6 +17,17 @@ contracts = binance.get_contracts()
 
 time_frame = '1m'
 symbol = 'BTCUSDT'
+
+@app.route('/ta', methods=['POST'])
+def technical_analysis():
+    # request.args is to get urls arguments
+    print("/TA.......................")
+    print(request)
+    print(request.json)
+    candles = request.json['candles']
+    print(candles)
+    return {'ready': True}
+
 
 @app.route('/symbols')
 def get_symbols():

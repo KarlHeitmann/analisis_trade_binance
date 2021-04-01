@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import { Radio } from 'antd';
 
-const TimeFrames = () => {
-  const [value, setValue] = React.useState(1);
+const TimeFrames = (props) => {
+  const [value, setValue] = React.useState(props.tf);
 
   const onChange = e => {
     console.log('radio checked', e.target.value);
     setValue(e.target.value);
+    props.setTf(e.target.value);
   };
 
   const time_frames = ["1m", "5m", "1h", "1d"]

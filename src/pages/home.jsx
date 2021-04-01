@@ -8,6 +8,8 @@ function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
   const [symbols, setSymbols] = useState([])
+  const [symbol, setSymbol] = useState()
+  const [tf, setTf] = useState("1m")
   const [ta, setTa] = useState({trend_ema_fast: [], trend_ema_slow: []})
 
   useEffect(() => {
@@ -22,13 +24,27 @@ function Home(props) {
   }
 
   const getCandlesSymbol = async(symbol) => {
-    const tf = '1m'
     const response = await fetch(`/candles/${symbol}/${tf}`);
     const result = await response.json();
     const {candles} = result;
     console.log("RAW CANDLES", result);
     setCandles(candles);
+    setSymbol(symbol);
     setTa(result.df);
+  }
+
+  const analizar = async() => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ candles })
+    };
+    // fetch('https://jsonplaceholder.typicode.com/posts', requestOptions)
+    //     .then(response => response.json())
+    //     .then(data => this.setState({ postId: data.id }));
+    const response = await fetch(`/ta`, requestOptions);
+    const result = await response.json();
+    console.log(result);
   }
 
   return <>
@@ -39,9 +55,13 @@ function Home(props) {
       </Col>
       <Col span={7}>
         <Button onClick={clickStart}>START</Button>
+        <Button onClick={analizar}>ANALIZAR</Button>
       </Col>
       <Col span={7}>
-        <TimeFrames />
+        <TimeFrames
+          tf={tf}
+          setTf={setTf}
+        />
       </Col>
     </Row>
     <Row>
