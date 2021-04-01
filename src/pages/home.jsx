@@ -43,8 +43,11 @@ function Home(props) {
     //     .then(response => response.json())
     //     .then(data => this.setState({ postId: data.id }));
     const response = await fetch(`/ta`, requestOptions);
-    const result = await response.json();
-    console.log(result);
+    console.log("B", response)
+
+    // const result = await response.json();
+    // console.log("A")
+    // console.log(result);
   }
 
   return <>
@@ -67,6 +70,7 @@ function Home(props) {
     <Row>
       <Col span={18}>
         <PlotCandleSticks
+          seleccion_ta={['trend_ema_fast', 'trend_ema_slow']}
           data={candles}
           ta={ta}
         />

@@ -25,8 +25,19 @@ def technical_analysis():
     print(request)
     print(request.json)
     candles = request.json['candles']
+    df = pd.DataFrame(data=candles)
+    ema_fast = ta.trend.ema_indicator(df.close, 9)
+    ema_medium = ta.trend.ema_indicator(df.close, 26)
+    ema_slow = ta.trend.ema_indicator(df.close, 50)
     print(candles)
-    return {'ready': True}
+    print(ema_fast)
+    print(ema_fast.iloc[10:])
+    return {
+        'ready': True, 'df': df.to_dict(),
+        'ema_fast': ema_fast.iloc[10:].to_dict(),
+        # 'ema_medium': ema_medium.to_dict(),
+        # 'ema_slow': ema_slow.to_dict(),
+    }
 
 
 @app.route('/symbols')
