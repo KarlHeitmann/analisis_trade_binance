@@ -49,7 +49,7 @@ function Home(props) {
     const result = await response.json();
     await setSeleccionTa([]);
     await setTa(result);
-    await setSeleccionTa(['ema_fast']);
+    await setSeleccionTa(['ema_fast', 'ema_medium', 'ema_slow', ]);
     console.log("A", result);
     // console.log(result);
   }
