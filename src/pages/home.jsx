@@ -47,9 +47,10 @@ function Home(props) {
     // console.log("B", response)
 
     const result = await response.json();
-    setTa(result)
-    setSeleccionTa(['trend_ema_fast'])
-    console.log("A", result)
+    await setSeleccionTa([]);
+    await setTa(result);
+    await setSeleccionTa(['ema_fast']);
+    console.log("A", result);
     // console.log(result);
   }
 
