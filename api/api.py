@@ -34,9 +34,9 @@ def technical_analysis():
     print(ema_fast.iloc[10:])
     return {
         'ready': True, 'df': df.to_dict(),
-        'ema_fast': ema_fast.iloc[10:].to_dict(),
+        'trend_ema_fast': ema_fast.iloc[10:].to_dict(),
         # 'ema_medium': ema_medium.to_dict(),
-        # 'ema_slow': ema_slow.to_dict(),
+        'trend_ema_slow': ema_slow.iloc[51:].to_dict(),
     }
 
 

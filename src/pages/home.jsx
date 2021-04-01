@@ -9,6 +9,7 @@ function Home(props) {
   const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
   const [symbols, setSymbols] = useState([])
   const [symbol, setSymbol] = useState()
+  const [seleccion_ta, setSeleccionTa] = useState(['trend_ema_fast', 'trend_ema_slow'])
   const [tf, setTf] = useState("1m")
   const [ta, setTa] = useState({trend_ema_fast: [], trend_ema_slow: []})
 
@@ -43,10 +44,12 @@ function Home(props) {
     //     .then(response => response.json())
     //     .then(data => this.setState({ postId: data.id }));
     const response = await fetch(`/ta`, requestOptions);
-    console.log("B", response)
+    // console.log("B", response)
 
-    // const result = await response.json();
-    // console.log("A")
+    const result = await response.json();
+    setTa(result)
+    setSeleccionTa(['trend_ema_fast'])
+    console.log("A", result)
     // console.log(result);
   }
 
@@ -70,7 +73,7 @@ function Home(props) {
     <Row>
       <Col span={18}>
         <PlotCandleSticks
-          seleccion_ta={['trend_ema_fast', 'trend_ema_slow']}
+          seleccion_ta={seleccion_ta}
           data={candles}
           ta={ta}
         />
