@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Row, Col, Button } from 'antd'
 import PlotCandleSticks from '../plots/plot_candle_sticks';
+import Contracts from '../components/contracts';
+import TimeFrames from '../components/time_frames';
 
 function Home(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [candles, setCandles] = useState({'open': [], 'close': [], 'high': [], 'low': [], 'volume': []});
+  const [symbols, setSymbols] = useState([])
+  const [symbol, setSymbol] = useState()
+  const [seleccion_ta, setSeleccionTa] = useState(['trend_ema_fast', 'trend_ema_slow'])
+  const [tf, setTf] = useState("1m")
+  const [ta, setTa] = useState({trend_ema_fast: [], trend_ema_slow: []})
 
   useEffect(() => {
     fetch('/time').then(res => res.json()).then(data => {
@@ -11,35 +19,75 @@ function Home(props) {
     });
   }, []);
 
-  const clickCandles = async() => {
-    // function clickCandles() {
-    // fetch('/candles').then(res => res.json()).then(data => {
-    //   console.log(data.candles);
-    //   setCandles(candles);
-    // });
-    const response = await fetch('/candles');
+  const clickStart = async() => {
+    const response = await fetch('/start');
     const result = await response.json();
-    const {candles} = result;
-    console.log("RAW CANDLES", candles)
-    setCandles(candles)
-    // setCandles(candles.candles);
   }
 
-  console.log(candles);
+  const getCandlesSymbol = async(symbol) => {
+    const response = await fetch(`/candles/${symbol}/${tf}`);
+    const result = await response.json();
+    const {candles} = result;
+    console.log("RAW CANDLES", result);
+    setCandles(candles);
+    setSymbol(symbol);
+    setTa(result.df);
+  }
 
+  const analizar = async() => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ candles })
+    };
+    // fetch('https://jsonplaceholder.typicode.com/posts', requestOptions)
+    //     .then(response => response.json())
+    //     .then(data => this.setState({ postId: data.id }));
+    const response = await fetch(`/ta`, requestOptions);
+    // console.log("B", response)
+
+    const result = await response.json();
+    await setSeleccionTa([]);
+    await setTa(result);
+    await setSeleccionTa(['ema_fast', 'ema_medium', 'ema_slow', ]);
+    // await setSeleccionTa(['ema_fast']);
+    console.log("A", result);
+    // console.log(result);
+  }
 
   return <>
-    <h1>Home</h1>
-    <button onClick={clickCandles}>Candles</button>
-    <p>The current time is {currentTime}.</p>
-    <PlotCandleSticks
-      data={candles}
-    />
-    <table>
-      {/* {candles.map(candle => <tr>
-        <td>{candle}</td>
-      </tr>)} */}
-    </table>
+    <Row>
+      <Col span={7}>
+        <h1>Home</h1>
+        <p>The current time is {currentTime}.</p>
+      </Col>
+      <Col span={7}>
+        <Button onClick={clickStart}>START</Button>
+        <Button onClick={analizar}>ANALIZAR</Button>
+      </Col>
+      <Col span={7}>
+        <TimeFrames
+          tf={tf}
+          setTf={setTf}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col span={18}>
+        <PlotCandleSticks
+          seleccion_ta={seleccion_ta}
+          data={candles}
+          ta={ta}
+        />
+      </Col>
+      <Col span={4}>
+        <Contracts
+          getCandlesSymbol={getCandlesSymbol}
+          setSymbols={setSymbols}
+          symbols={symbols}
+        />
+      </Col>
+    </Row>
   </>;
 }
 

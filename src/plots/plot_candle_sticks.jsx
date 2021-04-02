@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
+import {
+  Slider
+} from 'antd';
 
 var layout = {
   dragmode: 'zoom',
@@ -41,19 +44,60 @@ let trace_candlestick = {
 };
 
 function PlotCandleSticks(props) {
-  const {data} = props;
-  console.log('data props', data);
+  const {data, ta} = props;
+  // const {max, setMax} = useState(0)
+  const [maxi, setMaxi] = useState(0)
+  const [current_values, setCurrentValues] = useState([0, 1000])
+  // console.log('data props', data);
+  console.log('TA', ta);
 
-  trace_candlestick.close = data.close;
-  trace_candlestick.open = data.open;
-  trace_candlestick.high = data.high;
-  trace_candlestick.low = data.low;
-  trace_candlestick.volume = data.volume;
-  trace_candlestick.x = data.timestamp;
+
+  // const trend_ema_fast = ta.trend_ema_fast.slice(current_values[0], current_values[1]);
+  // const trend_ema_slow = ta.trend_ema_slow.slice(current_values[0], current_values[1]);
+  // console.log("TRACE_TREND YYYYYYY",trace_trends)
+  trace_candlestick.close = data.close.slice(current_values[0], current_values[1]);
+  trace_candlestick.open = data.open.slice(current_values[0], current_values[1]);
+  trace_candlestick.high = data.high.slice(current_values[0], current_values[1]);
+  trace_candlestick.low = data.low.slice(current_values[0], current_values[1]);
+  trace_candlestick.volume = data.volume.slice(current_values[0], current_values[1]);
+  trace_candlestick.x = data.timestamp //.slice(current_values[0], current_values[1]);
+
+  let trace_trends = [trace_candlestick];
+  props.seleccion_ta.forEach(selected => {
+    let trace_trend = {type: 'scatter'};
+    trace_trend.x = data.timestamp;
+    console.log('PCS_ta', ta)
+    console.log('PCS_selected', selected)
+    console.log('PCS_ta[selected]', ta[selected])
+    console.log('PCS_Object.keys', Object.keys(ta[selected]))
+    trace_trend.y = Object.keys(ta[selected]).map(data => ta[selected][data]);
+    trace_trend.y = trace_trend.y.slice(current_values[0], current_values[1]);
+    trace_trends.push(trace_trend);
+  })
+
+  useEffect(() => {
+    const l = trace_candlestick.close
+    console.log("TRACE_CANDLESTICK.x", l.length, l)
+    setMaxi(trace_candlestick.x)
+  }, [])
+
+  const onChange = (rango) => {
+    setCurrentValues(rango)
+    console.log(rango);
+  }
   return <>
     <h1>Plot Candle Sticks</h1>
+    <Slider
+      range
+      defaultValue={[0, 1000]}
+      onChange={onChange}
+      // max={maxi}
+      value={current_values}
+      max={1000}
+      />
     <Plot
-      data={[trace_candlestick]}
+      data={trace_trends}
+      // data={[trace_trends]}
       layout={layout}
     />
 
