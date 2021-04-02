@@ -50,6 +50,7 @@ function Home(props) {
     await setSeleccionTa([]);
     await setTa(result);
     await setSeleccionTa(['ema_fast', 'ema_medium', 'ema_slow', ]);
+    // await setSeleccionTa(['ema_fast']);
     console.log("A", result);
     // console.log(result);
   }
