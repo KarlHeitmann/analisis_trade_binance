@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Analisis Trade Binance.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the app:
 
-## Available Scripts
+![image](https://user-images.githubusercontent.com/3003032/119751258-cff8d700-be68-11eb-8599-2e4511153410.png)
 
-In the project directory, you can run:
+As you can see, there is a sidebar where you can choose your favorite coin available in binance. When you click
+the coin, it sends a request to the flask server, it asks the information in binance, and then it analyses it with
+pandas and the [ta](https://github.com/bukosabino/ta), and it sends back a JSON to the react app, so it can display
+a graph using the [plot.ly](https://plotly.com/python/candlestick-charts/) library.
 
-### `yarn start`
+# Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The project is built on React.JS and Flask, their base languages are JavaScript and Python3. To install the dependencies,
+install first python3 & virtualenv and node.js & yarn. Then, open a terminal and go to the root directory of this project and run
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+> yarn install
 
-### `yarn test`
+Then, go to the folder `api` and run
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> pip install -r requirements
 
-### `yarn build`
+# Running
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You must get your Binance API KEY and SECRET KEY, and your BITMEX API KEY and SECRET KEY. Create a file named `.flaskenv` and put this content inside:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+FLASK_APP=api.py
+FLASK_ENV=development
+BINANCE_KEY=
+BINANCE_SECRET=
+BITMEX_ID=
+BITMEX_SECRET=
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+As you can see, on the code above there is no BINANCE_KEY, BINANCE_SECRET, BITMEX_ID nor BITMEX_SECRET associated value.
+Fill it in with the keys you.
 
-### `yarn eject`
+**IMPORTANT NOTE:** By default this app works with the testnet on binance and bitmex. So you must enter your keys of the **testnet** account. 
+If you want to go live, you must search the source code to change to live. Note that this must be done on the connector file, or the file that calls it.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Then, open a termina and go to the `api/` folder and run:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> yarn start-api
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This command will load the environment variables and will launch the python flask application
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Next, open another terminal, go to the root folder of the application and run
 
-## Learn More
+> yarn start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This command will launch the react application. You can visit the webapp by going to `localhost:3000`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
